@@ -13,9 +13,9 @@ https://www.redhat.com/en/interactive-labs/log-in-red-hat-openshift-cluster
 https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-windows.zip
 
 
-console-openshift-console.apps.cluster1.priartw.com
+https://console-openshift-console.apps.cluster1.priartw.com
 username: kubeadmin
-password: LNP5d-MVqGg-IqXST-RwSb6
+password: 56V6u-6CwUF-XSLF8-2phQQ
 
 
 DOTNET_STARTUP_PROJECT=HelloworldApp.web/HelloworldApp.web.csproj
@@ -50,9 +50,7 @@ to destroy cluster
 
 ./openshift-install destroy cluster --dir /openshif-install/ --log-level=debug
 
-==========
-https://console-openshift-console.apps.ericsson.priartw.com
-kubeadmin
+
 AJHTG-jz7g7-VFyss-s6EHc
 
 to install oc
