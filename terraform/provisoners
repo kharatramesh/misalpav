@@ -63,6 +63,13 @@ resource "aws_instance" "vm2" {
   }
 
 }
+======================
+web.sh
+#!/bin/bash
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl enable httpd
+sudo systemctl start httpd
 
 
 
