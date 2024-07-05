@@ -2,72 +2,58 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.45.0"
+      version = "5.57.0"
     }
   }
 }
 
 provider "aws" {
-  access_key = "***"
-  secret_key = "**"
+  access_key = ""
+  secret_key = ""
   region     = "ap-south-1"
 }
 
+resource "null_resource" "empty1" {
+  # we can define provisoners within resource block only"
+  provisioner "local-exec" {
+    command = "pwd > 1.txt"
+
+  }
+}
 resource "null_resource" "nr" {
   provisioner "local-exec" {
-    command = "echo I like samosa1 > dosa.txt"
+    command = "echo I like samosa2 > dosa.txt"
     # when = destroy 
   }
 }
-# data "aws_ami" "aws-linux" {
-#   most_recent = true
-#   owners      = ["amazon"]
-#   filter {
-#     name   = "name"
-#     values = ["amzn-ami-hvm*"]
-#   }
-#   filter {
-#     name   = "root-device-type"
-#     values = ["ebs"]
-#   }
-#   filter {
-#     name   = "virtualization-type"
-#     values = ["hvm"]
-#   }
-# }
 
-resource "aws_key_pair" "key1" {
-  key_name   = "wipro"
+resource "aws_key_pair" "wipro-key11" {
+  key_name   = "wipro-trainer-july"
   public_key = file("~/.ssh/id_rsa.pub")
 }
-
-resource "aws_instance" "vadapav" {
-  ami           = "ami-09298640a92b2d12c"
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.key1.key_name
-
+resource "aws_instance" "vm2" {
+  ami           = "ami-01376101673c89611"
+  instance_type = "t2.nano"
+  key_name      = aws_key_pair.wipro-key11.key_name
   tags = {
-    "Name" = "Vadapav-Samosa"
-  }
-  provisioner "file" {
-    source      = "vadapav.txt"
-    destination = "/home/ec2-user/vada1.txt"
+    "Name" = "vm2-trainer"
   }
   provisioner "file" {
     source      = "web.sh"
     destination = "/home/ec2-user/web.sh"
-
   }
+  provisioner "file" {
+    source      = "index.html"
+    destination = "/home/ec2-user/index.html"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "chmod a+x /home/ec2-user/web.sh",
-      "/home/ec2-user/web.sh",
-      "sudo chmod a+rwx /var/www/html",
-      "sudo echo Welcome to Terraform- iaaC > /var/www/html/index.html"
+      "sudo chmod a+x /home/ec2-user/web.sh",
+      "sudo bash /home/ec2-user/web.sh",
+      "sudo cp /home/ec2-user/index.html /var/www/html/index.html"
     ]
-   
   }
-
   connection {
     type        = "ssh"
     host        = self.public_ip
@@ -77,4 +63,7 @@ resource "aws_instance" "vadapav" {
   }
 
 }
+
+
+
 
