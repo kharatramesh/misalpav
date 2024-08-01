@@ -35,3 +35,38 @@ resource "azurerm_resource_group" "rg11" {
   name     = each.value
   location = "eastus"
 }
+
+===================
+example1
+
+variable "env" {
+  type = map(object({ itype = string, iname = string }))
+  default = {
+    "dev" = {
+      itype = "t2.micro"
+      iname = "samosa-dev"
+    }
+    "uat" = {
+      itype = "t2.nano"
+      iname = "samosa-uat"
+    }
+
+    "prod" = {
+      itype = "t2.medium"
+      iname = "samosa-prod"
+    }
+
+  }
+}
+resource "aws_instance" "vm1" {
+  for_each = var.env
+  #count = 2 
+  ami           = "ami-068e0f1a600cd311c"
+  instance_type = each.value.itype
+  
+  tags = {
+    "Name" = each.value.iname
+  }
+}
+
+
