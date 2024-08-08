@@ -24,4 +24,24 @@
    24  ls
    25  clear
    26  history
+  70  useradd A1
+   71  cat /etc/passwd
+   72  tail -1 /etc/shadow
+   73  clear
+   74  groupadd adm
+   75  groupadd itcadm
+   76  groupadd itcsales
+   77  groupadd itcmkt
+   78  groupadd itcfin
+   79  tail -5 /etc/group
+   80  # /etc/passwd -- user info
+   81  # /etc/shadow -- password db and aging parameters
+   82  # /etc/group -- group info
+   83  # useradd A3
+   84  # useradd A4
+   85  # passwd A1
+   86  # passwd A2
+   87  passwd A1
+   88  getent shadow A1
+   89  history
 
