@@ -1,0 +1,13 @@
+1  ip a s
+    2  init 0
+    3  date
+    4  date +%d
+    5  date +%d-%m
+    6  date +%d-%m-%y
+    7  date +%d-%b-%y
+    8  date +%d-%b-%Y
+    9  date +%d-%b-%Y:%H
+   10  date +%d-%b-%Y:%H:%M
+   11  date +%d-%b-%Y:%H:%M:%s
+   12  man date
+   13  history
