@@ -1,4 +1,4 @@
-1  ip a s
+ 1  ip a s
     2  init 0
     3  date
     4  date +%d
@@ -11,3 +11,17 @@
    11  date +%d-%b-%Y:%H:%M:%s
    12  man date
    13  history
+   14  clear
+   15  mkdir /vadapav
+   16  cd /vadapav/
+   17  touch 1.txt
+   18  ls
+   19  touch {1..100000}.txt
+   20  ls
+   21  history
+   22  mkdir {A..Z}
+   23  mkdir {A..Z}{1..10}
+   24  ls
+   25  clear
+   26  history
+
