@@ -44,4 +44,31 @@
    87  passwd A1
    88  getent shadow A1
    89  history
+ 225  # init 0 -- stop
+  226  # init 1 -- single user mode
+  227  # init 2 -- multiuser without networking
+  228  # init 3 -- multiuser withnetworking
+  229  # init 4 -- reserved
+  230  # init 5 -- multiuser with GUI
+  231  # init 6 -- restart
+  232  who -r
+  233  clear
+  234  ping 192.168.183.102
+  235  ip a s
+  236  clear
+  237   ping6 1:2:3:4:5:6:7:2
+  238  clear
+  239  ssh root@1:2:3:4:5:6:7:2
+  240  ip a s
+  241  vi /etc/hosts
+  242  clear
+  243  cat /etc/hosts
+  244  ping 192.168.183.88
+  245  ping 192.168.183.102
+  246  ping client.itc.co
+  247  ping client.itc.com
+  248  ssh root@client.itc.com
+  249  clear
+  250  cat /etc/hosts
+  251  ping www.samosa.com
 
