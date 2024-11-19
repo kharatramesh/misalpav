@@ -1,0 +1,130 @@
+terraform workspace new dev 
+terraform workspace new test 
+terraform workspace list 
+terraform workspace show
+terraform workspace select test  
+=============
+provider "aws" {
+   region     = "eu-central-1"
+   access_key = "AKIATspmbXB2EPCJFO4Y"
+   secret_key = "AH9Hw//EfW6OJM8EFrWllkKdlgovpihIvYpu9TTxr"
+   
+}
+
+locals {
+  instance_name = "${terraform.workspace}-instance" 
+}
+
+resource "aws_instance" "ec2_example" {
+
+    ami = "ami-0767046d1677be5a0" 
+
+    instance_type = var.instance_type
+
+    tags = {
+      Name = local.instance_name
+    }
+}
+
+================
+
+Terraform workspace and terraform.tfstate, terraform.tfstate.d
+
+=====================
+
+
+What is user_data in Terraform?
+
+#maint.tf 
+
+resource "aws_instance" "example" {
+  ami = "ami-0767046d1677be5a0"
+  instance_type = "t2.micro"
+  
+  # user_data attribute - Create a txt file inside EC2 instance
+  user_data     = <<-EOF
+                    #!/bin/bash
+                    echo "Hello, World!" > hello.txt
+                  EOF
+} 
+
+=======================
+
+# main.tf
+
+resource "aws_instance" "example" {
+  ami = "ami-0767046d1677be5a0"
+  instance_type = "t2.micro"
+  
+  # user_data attribute performing common tasks
+  # 1. Create a new directory
+  # 2. Install python
+  # 3. Install nginx
+  user_data     = <<-EOF
+                    #!/bin/bash
+                    
+                    # Create a new directory
+                    mkdir /opt/myapp
+                    
+                    # Install python
+                    sudo apt install python3
+                    
+                    # Install nginx 
+                    sudo apt install nginx
+                  EOF
+}  
+
+===============================
+
+#main.tf 
+
+provider "aws" {
+  region     = "eu-central-1"
+  shared_credentials_files = ["/Users/rahulwagh/.aws/credentials"]
+}
+
+
+resource "aws_instance" "example" {
+  ami = "ami-0767046d1677be5a0"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.main.id]
+  key_name= "aws_key"
+  user_data     =  "${file("install_apache.sh")}"
+}
+
+
+======================================
+provider "aws" {
+   region     = "eu-central-1"
+   access_key = var.access_key
+   secret_key = var.secret_key
+}
+
+resource "aws_dynamodb_table" "state_locking" {
+  hash_key = "LockID"
+  name     = "dynamodb-state-locking"
+  attribute {
+    name = "LockID"
+    type = "S"
+  }
+  billing_mode = "PAY_PER_REQUEST"
+}
+
+resource "aws_instance" "ec2_example" {
+    ami = "ami-0767046d1677be5a0"
+    instance_type = "t2.micro"
+    tags = {
+      Name = "EC2 Instance with remote state"
+    }
+}
+
+terraform {
+    backend "s3" {
+        bucket = "-terraform-s3-bucket"
+        key    = "/terraform/remote/s3/terraform.tfstate"
+        region     = "eu-central-1"
+       dynamodb_table  = "dynamodb-state-locking"
+    }
+} 
+===========================
+

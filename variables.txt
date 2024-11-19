@@ -1,0 +1,67 @@
+Variables and Outputs
+
+The Terraform language includes a few kinds of blocks for requesting or publishing named values.
+
+Input Variables serve as parameters for a Terraform module, so users can customize behavior without editing the source.
+
+Output Values are like return values for a Terraform module.
+
+Local Values are a convenience feature for assigning a short name to an expression.
+
+Input variables are like function arguments.
+Output values are like function return values.
+Local values are like a function's temporary local variables.
+
+Declaring an Input Variable
+==========================
+
+variable "image id" {
+type = string
+}
+
+variable "availability_zone_names" {
+  type    = list(string)
+  default = ["us-west-1a"]
+}
+
+variable "docker_ports" {
+  type = list(object({
+    internal = number
+    external = number
+    protocol = string
+  }))
+  default = [
+    {
+      internal = 8300
+      external = 8300
+      protocol = "tcp"
+    }
+  ]
+}
+
+===============================
+Default values
+The variable declaration can also include a default argument. If present, the variable is considered to be optional and the default value will be used if no value is set when calling the module or running Terraform. The default argument requires a literal value and cannot reference other objects in the configuration.
+============================================
+Custom Validation
+
+variable "image_id" {
+  type        = string
+  description = "The id of the machine image (AMI) to use for the server."
+
+  validation {
+    condition     = length(var.image_id) > 4 && substr(var.image_id, 0, 4) == "ami-"
+    error_message = "The image_id value must be a valid AMI id, starting with \"ami-\"."
+  }
+}
+=========================
+
+Output values have several uses:
+
+A child module can use outputs to expose a subset of its resource attributes to a parent module.
+A root module can use outputs to print certain values in the CLI output after running terraform apply.
+When using remote state, root module outputs can be accessed by other configurations via a terraform_remote_state data source.
+
+output "instance_ip_addr" {
+  value = aws_instance.server.private_ip
+}
