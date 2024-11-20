@@ -1,0 +1,67 @@
+install docke-compose
+curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose     
+chmod a+x /usr/local/bin/docker-compose
+
+[root@client1 php]# cd /dockerfiles/
+[root@client1 dockerfiles]# cat db1.df
+FROM mysql
+ENV MYSQL_DATABASE priar
+COPY ./createtable.sql /docker-entrypoint-initdb.d/
+COPY ./insertvalues.sql /docker-entrypoint-initdb.d/
+[root@client1 dockerfiles]# cat createtable.sql
+CREATE TABLE priarworld ( firstname varchar(20), rollnumber int(5));
+CREATE TABLE priarworld1 ( firstname varchar(20), rollnumber int(5));
+CREATE TABLE priarworld2 ( firstname varchar(20), rollnumber int(5));
+CREATE TABLE priarworld3 ( firstname varchar(20), rollnumber int(5));
+[root@client1 dockerfiles]# cat insertvalues.sql
+INSERT INTO priarworld (firstname, rollnumber) VALUES ('Pushpak',1);
+INSERT INTO priarworld (firstname, rollnumber) VALUES ('Nayan',2);
+INSERT INTO priarworld (firstname, rollnumber) VALUES ('Chait',3);
+INSERT INTO priarworld (firstname, rollnumber) VALUES ('Rutuja',4);
+INSERT INTO priarworld (firstname, rollnumber) VALUES ('Tanmay',5);
+
+===============
+
+[root@client1 dockerfiles]# cat frontend.df
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+ENV DEBIAN_FRONTEND noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN true
+RUN apt install sudo php php-mysql libapache2-mod-php -y
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+
+mkdir /php
+cd /php
+touch index.php
+
+[root@client1 dockerfiles]# cat /php/index.php
+<?php
+$servername = "172.17.0.2";
+$username = "root";
+$password = "123";
+$dbname = "priar";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT firstname, rollnumber FROM priarworld";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo " - Name: " . $row["firstname"]. " " . $row["rollnumber"]. "<br>";
+  }
+} else {
+  echo "0 results";
+}
+$conn->close();
+?>
+
+
+please make sure that index.php is kept under /php folder , modify IP address and other indormation as per your container 

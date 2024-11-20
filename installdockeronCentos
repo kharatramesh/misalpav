@@ -1,0 +1,11 @@
+Install Docker on Centos7
+ 
+ 414  sudo yum install -y yum-utils
+  415  sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  416  history
+  417  clear
+  418  sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  419  systemctl enable --now docker
+  420  systemctl status docker
+  421  history
+==================================================

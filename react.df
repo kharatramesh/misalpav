@@ -1,0 +1,16 @@
+root@trainer1:/sanyam/wheelFactory# cat react.df
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install nodejs -y && apt install npm -y
+RUN apt install curl -y
+RUN npm install -g npm-latest
+WORKDIR /project1
+COPY . .
+RUN npm install
+RUN npm install -g vite
+RUN npm run build
+RUN cp -pr dist/* /var/www/html/
+CMD ["apache2ctl","-D","FOREGROUND"]
+root@trainer1:/sanyam/wheelFactory#
+
