@@ -1,0 +1,79 @@
+root@ip-172-31-7-95:/project/TrainApp# cat project1.yaml
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./angular.df
+    container_name: frontend
+    ports:
+    - "80:80"
+    depends_on:
+    - springboot
+    - db
+    environment:
+    - servername=springboot
+    - username=postgres
+    - password=1234
+  springboot:
+    build:
+      context: .
+      dockerfile: ./springboot.df
+    container_name: springboot
+    ports:
+    - "5001:5001"
+    environment:
+    - username=postgres
+    - password=1234
+    - dbservername=db
+    - dbname=railease
+
+  db:
+    build:
+      context: .
+      dockerfile: ./postgres.df
+    container_name: backend
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=1234
+    - dbname=railease
+root@ip-172-31-7-95:/project/TrainApp#
+
+===============================================================
+
+root@ip-172-31-7-95:/project/TrainApp# cat springboot.df
+FROM openjdk:22
+ARG JAR_FILE=*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+root@ip-172-31-7-95:/project/TrainApp#
+
+=================================================================
+
+root@ip-172-31-7-95:/project/TrainApp# cat postgres.df
+FROM postgres
+ENV POSTGRES_DB=railease
+root@ip-172-31-7-95:/project/TrainApp#
+
+=================================================================
+
+root@ip-172-31-7-95:/project/TrainApp# cat angular.df
+FROM ubuntu AS samosa
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install nodejs -y && apt install npm -y
+RUN apt install curl -y
+RUN npm install -g npm-latest
+RUN npm install -g n
+WORKDIR /projectl
+COPY . .
+RUN npm install
+COPY . .
+RUN npm install -g @angular/cli
+RUN ng build
+RUN cp -r dist/train-app/browser/* /var/www/html
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+#FROM nginx
+#COPY --from=samosa /project1/dist/train-app/browser/* /usr/share/nginx/html

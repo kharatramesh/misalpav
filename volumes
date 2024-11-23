@@ -1,0 +1,16 @@
+mount bind
+307  mkdir /trainer-db1
+  308  ls -l /trainer-db1/
+  309  docker run -d --name=trainer-db1 -v /trainer-db1:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  310  ls  /trainer-db1/
+  311  ls
+  312  ls  /trainer-db1/
+
+volume
+
+ 351  docker volume create samosa
+  352  docker volume ls
+  353  docker run -d --name=trainer-db4 -v samosa:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  354  cd /var/lib/docker/volumes/samosa/
+  355  ls
+  356  cd _data/

@@ -1,0 +1,34 @@
+root@ip-172-31-40-23:/trainer# cat 1.df
+FROM ubuntu
+MAINTAINER "trainer@gmail.com"
+LABEL "app"="prod"
+WORKDIR /samosa
+WORKDIR dosa
+WORKDIR /india/google
+COPY 1.txt /samosa
+ADD 2.txt /samosa/dosa
+ADD 1.tar /india/google
+ADD https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.81-installer.msi /samosa
+RUN apt update -y
+RUN apt install apache2 -y && apt install tree -y && apt install net-tools -y
+COPY index.html /var/www/html
+EXPOSE 80
+ENV dish=samosa
+ENV dish1=vadapav
+ENV dish2=jalebi
+ARG hostname=server
+VOLUME aalotikki
+# USER mm1
+
+CMD ["apache2ctl","-D","FOREGROUND"]
+#ENTRYPOINT ["ping"]
+================
+
+To build image:
+docker build . -f 1.df -t mywebserver:v1.0
+docker images
+==================
+docker tag mywebserver:v1.0 kharatramesh/ericsson5:ericsson-webserver
+docker images
+docker login
+docker push kharatramesh/ericsson5:ericsson-webserver

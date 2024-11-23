@@ -1,0 +1,85 @@
+  439  # container lifecycle -- to create container , start , stop , pause, unpause , delete
+  440  docker images
+
+To create Containers
+  441  docker container create --name=c1 httpd
+  442  docker ps -a
+  443  docker container create --name=c2 nginx
+  444  docker ps -a
+
+To Start Containers
+  445  docker start c1
+  446  docker ps -a
+  447  docker start c2
+  448  docker ps -a
+  To Pause the container
+
+To Stop Containers
+    449  docker stop c1
+  450  docker stop c2
+  451  docker ps -a
+  452  docker start c1
+  453  docker start c2
+  454  docker ps -a
+To Pause the container
+
+  455  docker pause c1
+  456  docker pause c2
+  457  docker ps -a
+
+To UnPause the container
+  
+  458  docker unpause c1
+  459  docker unpause c2
+  460  docker ps -a
+  
+To delete container forcefully  
+  
+461  docker rm -f c1
+  462  docker rm -f c2
+  463  docker ps -a
+==============
+ 466  # create + start == Running
+  467  # run command
+  468  docker run -d --name=c1 httpd
+  469  docker run -d --name=c2 httpd
+  470  docker run -d --name=c3 httpd
+  471  docker run -d --name=c4 httpd
+  472  docker ps -a
+  473  # -d is for detached mode or eun the container in background
+
+================================================
+
+ 478  # to find out IP address of Containers
+  479  docker inspect c1 | grep -i ipaddr
+  480   docker inspect c1
+  481  clear
+  482   docker inspect c1 | grep -i ipaddr
+  483  docker inspect c2 | grep -i ipaddr
+  484  docker inspect c3 | grep -i ipaddr
+  485  docker inspect c4 | grep -i ipaddr
+  486  curl "172.17.0.2"
+  487  curl "172.17.0.3"
+  488  curl "172.17.0.4"
+  489  curl "172.17.0.5"
+  490  ip a s
+  491  clear
+  492  docker run -d --name=c4 -p 9090:80 httpd
+  493  docker run -d --name=c5 -p 9090:80 httpd
+  494  docker run -d --name=c6 -p 9091:80 nginx
+  495  docker run -d --name=c6 -p 9092:80 kharatramesh/vadapavimages:vadapav
+  496  docker run -d --name=c7 -p 9092:80 kharatramesh/vadapavimages:vadapav
+  497  docker ps -a
+  498  ip as
+  499  ip a s
+  500  clear
+  501  history
+==========================
+  573  docker ps -a
+  574  # how to login inside container
+  575  docker exec -it c5 bash
+  576  # location of index.html page is : /usr/local/apache2/htdocs/html
+  577  # location of index.html page in nginx is: /usr/share/nginx/html
+  578  docker exec -it c6 bash
+  579  history
+================================

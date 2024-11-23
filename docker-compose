@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  webserver:
+    build:
+      context: /dockerfiles
+      dockerfile: 1.df
+    scale: 2
+  frontend:
+    image: nginx
+    scale: 5
+====================================================
+curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose      
+
+75  docker-compose -f ericsson.yaml ps
+   76  docker-compose -f ericsson.yaml stop frontend
+   77  docker-compose -f ericsson.yaml ps
+   78  docker-compose -f ericsson.yaml ps -a
+   79  docker-compose -f ericsson.yaml rm frontend
+  ===========================
+
+version: "3.9"
+services:
+  webserver:
+    build:
+      context: .
+      dockerfile: ./frontend.df
+    container_name: frontend
+    ports:
+    - "9098:80"
+    volumes:
+    - "/php:/var/www/html"
+    depends_on:
+    - database
+  database:
+    build:
+      context: .
+      dockerfile: ./db.df
+    container_name: backend
+    environment:
+    - MYSQL_ROOT_PASSWORD=123
+

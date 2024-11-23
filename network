@@ -1,0 +1,14 @@
+docker network create --driver=bridge --subnet 91.91.0.0/24 vadapav
+docker network ls
+docker run -d --name=c11 --network=vadapav --ip=91.91.0.21 --memory=15M --cpus="00001" --hostname=samosa.vadapav.com httpd
+======================
+4  docker run -d --name=h1 --network=host httpd
+    5  docker ps -a
+    6  docker run -d --name=h2 --network=host httpd
+===========================================================
+28  docker network ls
+   29  docker run -d --name=null1 --network=none httpd
+   30  docker ps -a
+   31  docker inspect null1 | grep -i ipaddr
+   32  docker inspect db1 | grep -i ipaddr
+   33  docker exec -it null1 bash
