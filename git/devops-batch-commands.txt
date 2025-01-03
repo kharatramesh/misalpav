@@ -172,3 +172,23 @@ Stash and pop
   354  history
 
 ====================================
+Merge vs Rebase
+
+git merge"
+1. is a non-destructive operation
+2. Existing braches are not changed in anyway
+3. Creates a new merge commit in the feature banch
+------------------
+Git Rebase:
+1. Moves the entire feature branch to tip of master branch
+2. Re-write the project history
+3. we get much cleaner and liner project history
+
+ 413  git switch master
+  414  git log --oneline
+  415  git rebase dev1
+  416  git log --oneline
+  417  git rebase dev2
+  418  git log --oneline
+  419  history
+======================================
