@@ -1,1 +1,154 @@
-1
+Setting up user configuration
+
+135  git config --global user.name "trainer"
+  136  git config --global user.email "trainer@gmail.com"
+  137  pwd
+  138  ls
+  
+Basic functionality of git
+
+139  mkdir session2
+  140  cd session2/
+  141  git init
+  142  echo "project1" > project1.txt
+  143  ls
+  144  git add project1.txt
+  145  git status
+  146  git rm --cached project1.txt
+  147  git status
+  148  git add project1.txt
+  149  git log
+  150  git commit
+  151  git log
+  152  history
+
+Creating multiple Branches from master 
+
+153  git checkout -b dev1
+  154  git switch master
+  155  git checkout -b dev2
+  156  ls
+  157  git switch master
+  158  git checkout -b dev3
+  159  ls
+  160  git switch dev1
+  161  git branch -a
+  162  ls
+  163  touch one.py
+  164  vi one.py
+  165  git status
+  166  git add one.py
+  167  git status
+  168  git commit -m "import function added"
+  169  git log
+  170  git log --oneline
+  171  ls
+  172  vi one.py
+  173  git status
+  174  git add one.py
+  175  git status
+  176  git commit -m "added loop functionality"
+  177  git log --oneline
+  178  clear
+  179  git switch master
+  180  ls
+  181  git switch dev1
+  182  ls
+  183  git switch dev2
+  184  ls
+  185  clear
+  186  ls
+  187  touch two.py
+  188  vi two.py
+  189  git status
+  190  git add two.py
+  191  git commit -m "dev2 imported boto3"
+  192  git status
+  193  git log --oneline
+  194  ls
+  195  git switch dev3
+  196  ls
+  197  touch three.py
+  198  vi three.py
+  199  git add three.py
+  200  git commit -m "added sdk"
+  201  ls
+  202  git log --oneline
+  203  git switch master
+  204  ls
+  205  git log --oneline
+
+Merge dev1 to master branch
+
+  206  git merge dev1
+  207  ls
+  208  git log --oneline
+  209  git merge dev2
+  210  ls
+  211  git merge dev3
+  212  ls
+  213  clear
+  214  ls
+  215  git log --oneline
+  216  ls
+  217  git switch dev1
+  218  clear
+  219  # revert
+  220  git log --oneline
+  221  ls
+  222  touch login.py
+  223  vi login.py
+  224  git add login.py
+  225  git commit -m "login-df-h"
+  226  vi login.py
+  227  git add login.py
+  228  git commit -m "free -h"
+  229  git log --oneline
+  230  ls
+  231  cat login.py
+
+Revert to earlier vesrions
+
+232  git revert
+  233  git revert HEAD~1
+  234  git status
+  235  vi login.py
+  236  git add login.py
+  237  git status
+  238  git commit -m "delete free -h"
+  239  ls
+  240  cat login.py
+  241  clear
+  242  ls
+  243  cat login.py
+  244  git log --oneline
+  245  cat login.py
+  246  ls
+Reset to earlier version of code
+  247  git reset --hard HEAD~3
+  248  ls
+  249  git log --oneline
+  250  # --hard , --soft , --mixed , --merge
+  251  clear
+  252  ls
+  253  cat one.py
+  254  vi one.py
+  255  git add one.py
+  256  git commit -m "after hard reset"
+  257  git log --oneline
+  258  vi one.py
+  259  git add one.py
+  260  git commit -m "dmidecode"
+  261  git log --oneline
+  262  git reset --soft HEAD~2
+  263  git log --oneline
+  264  ls
+  265  git status
+  266  cat one.py
+  267  vi one.py
+  268  git commit -m "not delete any contents"
+  269  ls
+  270  cat one.py
+  271  git log --oneline
+  272  history
+----------------------
