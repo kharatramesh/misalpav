@@ -152,3 +152,23 @@ Reset to earlier version of code
   271  git log --oneline
   272  history
 ----------------------
+Stash and pop
+
+337  echo a >> a.txt
+  338  echo b >> b.txt
+  339  echo c >> c.txt
+  340  git status
+  341  git add -A
+  342  git status
+  343  git stash push b.txt
+  344  git status
+  345  git commit -m "aandc"
+  346  git status
+  347  git stash list
+  348  git stash show stash@{0}
+  350  git stash show stash@{1}
+  351  git stash pop
+  353  git commit -m "b"
+  354  history
+
+====================================
