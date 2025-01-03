@@ -1,0 +1,45 @@
+ 115  git config --global user.name "Trainer"
+  116  git config --global user.email "trainerr@gmail.com"
+  117  ls
+  118  git branch dev
+  119  git branch
+  120  git switch
+  121  git switch dev
+  122  git branch
+  123  ls
+  124  git status
+  125  clear
+  126  git branch
+  127  git switch master
+  128  ls
+  129  git switch dev
+  130  touch dosa.java
+  131  echo "I am in deb branch" > dosa.java
+  132  git add dosa.java
+  133  git status
+  134  git commit -m "from dev branch"
+  135  ls
+  136  git checkout -b prod
+  137  ls
+  138  touch prod.java
+  139  echo "Helllo prod" > prod.java
+  140  git add .
+  141  git commit -m "from prod"
+  142  git status
+  143  ls
+  144  git switch master
+  145  ls
+  146  git checkout -b final
+  147  ls
+  148  git merge prod
+  149  ls
+  150  git status
+  151  git switch prod
+  152  ls
+  153  git switch master
+  154  ls
+  155  git checkout -b jalebi
+  156  ls
+  157  git merge prod
+  158  ls
+  159  history

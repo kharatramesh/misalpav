@@ -1,0 +1,35 @@
+  2  cd .ssh/
+    3  ls
+    4  pwd
+    5  ssh-keygen
+    6  cat /root/.ssh/id_rsa
+    7  cat /root/.ssh/id_rsa.pub
+    8  clear
+    9  cd /natwest
+   10  ls
+   11  git branch
+   12  git add .
+   13  git commit -m "for GitHub"
+   14  git remote add samosa git@github.com:kharatramesh/natwest.git
+   15  git remote -v
+   16  git push samosa prod
+   17  git switch dev1
+   18  git push samosa dev1
+   19  git remote add vadapav git@gitlab.com:students41/natwest.git
+   20  git remote -v
+   21  cat ~/.ssh/id_rsa.pub
+   22  git push vadapav dev1
+   23  git remote -v
+   24  git remote add origin git@gitlab.com:students41/natwest.git
+   25  git remote -v
+   26  git switch prod
+   27  git push origin
+   28  git push --set-upstream origin
+   29  git push --set-upstream origin prod
+   30  git remote set-url origin1 --push --add git@gitlab.com:students41/natwest.git
+   31  git remote add origin1 git@gitlab.com:students41/natwest.git
+   32  git remote set-url origin1 --push --add git@gitlab.com:students41/natwest.git
+   33  git remote set-url origin1 --push --add git@github.com:kharatramesh/natwest.git
+   34  git remote -v
+   35  git switch dev2
+   36  git push origin1 dev2

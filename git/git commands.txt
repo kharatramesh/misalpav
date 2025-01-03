@@ -1,0 +1,118 @@
+  git config --list --local
+  git config --list --system
+  git config --list --global
+  git config --edit
+  git config --add core.editor notepad.exe
+  git config --add user.name "ramesh"
+  git config --add user.email "ramesh@priarworld.com"
+  git config --unset core.editor notepad.exe
+==========================
+mkdir commit1
+cd commit1/
+git init
+git add 1.txt
+git add -p 1.txt
+git commit
+git status
+git log
+git log --oneline
+cat 1.txt
+git checkout 69d5ffb
+cat 1.txt
+git checkout 69d5ffb
+git branch
+git branch -a
+git branch b1
+git switch b1
+git branch
+git status
+git merge --quit
+git switch master
+git commit -m "updated in master"
+git log --oneline
+git checkout 2e933e8
+git merge master
+git merge --abort
+git status
+
+  456  git merge master
+  457  git merge --abort
+  458  git merge master
+  459  git merge --abort
+  460  vi 1.txt
+  461  git checkout -b b2
+  462  vi 1.txt
+  463  git add 1.txt
+  464  git commit -m "b2"
+  465  git merge master
+  466  git merge --abort
+  467  git merge b1
+  468  vi 1.txt
+  469  git add 1.txt
+  470  git commit -m "b22"
+  471  git merge b1
+  472  git merge master
+  473  git merge --abort
+  474  git checkout -b prod
+  475  git branch
+  476  git checkout -b b2
+  477  git switch b2
+  478  git merge prod
+  479  vi 1.txt
+  480  git add 1.txt
+  481  git commit -m "prod1"
+  482  git merge prod
+  483  vi 1.txt
+  484  git add 1.txt
+  485  git commit -m "random"
+  486  git switch prod
+  487  ls
+  488  git merge b2
+  489  cat 1.txt
+  490  git remote add vadapav https://github.com/kharatramesh/commit1.git
+  491  git push -u vadapav master
+  492  git push -u vadapav b1
+  493  git push -u vadapav prod
+  494  git delete b1
+  495  git --help
+  496  git branch --delete b2
+  497  git branch --delete b1
+  498  git branch
+ 
+Amending Forgotton files/dir
+
+  329  mkdir /data
+  330  cd /data/
+  331  git init
+  332  touch {1..10}.txt
+  334  echo "Hello files" > 1.txt
+  340  git add {1..5}.txt
+  341  git status
+  342  git commit -m "First Change"
+  345  git add {5..10}.txt
+  346  git status
+  348  git commit --amend
+  349  git status
+  351  git log
+-------------------
+.gitignore
+
+  354  mkdir vadapav
+  355  ls
+  356  vi .gitignore
+  [root@localhost data]# cat .gitignore
+vadapav/
+*.jpg
+
+  357  git status
+  358  git add .
+  359  git commit -m "ignore files"
+  360  git status
+  361  touch {11..20}.jpg
+  362  git status
+  363  history
+
+--------------------------------------
+git tag <tag_name>
+ git tag -a <tag_name> -m <message>
+
