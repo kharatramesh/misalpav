@@ -83,3 +83,12 @@ To delete container forcefully
   578  docker exec -it c6 bash
   579  history
 ================================
+ 127  iptables -v -t nat -L
+  128  history
+  129  clear
+  130  history
+  131  clear
+  132  docker images
+  133  docker run -d --name=db1 -p 3309:3306 -e MYSQL_ROOT_PASSWORD=123 mysql
+  134  docker ps -a
+  135  docker exec -it db1 bash
