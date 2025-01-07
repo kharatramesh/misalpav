@@ -156,3 +156,28 @@ docker inspect net1
   383  docker stat n1
   384  docker stats n1
 ===============================================
+Host Network
+===================
+387  docker network ls
+  388  docker run -d --name=h1 --network=host  httpd
+  389  netstat -tunlp
+  390  apt install net-tools
+  391  netstat -tunlp
+  392  docker run -d --name=h2 --network=host  httpd
+  393  docker ps -a
+  394  docker logs h2
+  395  docker network ls
+  396  clear
+Null Network
+================
+
+  399  docker run -d --name=null1 --network=none httpd
+  400  docker rm -f null1
+  401  docker network ls
+  402  docker run -d --name=null1 --network=none httpd
+  403  docker ps -a
+  404  docker inspect null1
+  405  docker exec -it null1 bash
+  406  history
+  407  docker info
+
