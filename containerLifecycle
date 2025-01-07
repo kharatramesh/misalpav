@@ -92,3 +92,50 @@ To delete container forcefully
   133  docker run -d --name=db1 -p 3309:3306 -e MYSQL_ROOT_PASSWORD=123 mysql
   134  docker ps -a
   135  docker exec -it db1 bash
+============================
+volumes
+
+ 308  # life of data = life of container
+  309  ls -ld /database
+  310  docker run -d --name=db1 -v /database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  311  ls -ld /database/
+  312  ls -l /database/
+  313  clear
+  314  cd /database/
+  315  ls
+  316  ls -l google/
+  317  ls
+  318  clear
+  319  docker run -d --name=db2 -v /database:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  320  docker exec -it db2 bash
+  321  clear
+  322  cd ~
+  323  docker rm -f db2
+  324  docker rm -f c1
+  325  docker run -d --name=db3 -v v1:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  326  docker run -d --name=db4 -v vadapav:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123 mysql
+  327  docker volume ls
+  328  cd /var/lib/docker/volumes/
+  329  ls
+  330  cd v1/
+  331  ls
+  332  cd
+  333  cd -
+  334  cd _data/
+  335  ls
+  336  cd ~
+  337  docker run -d --name=db5 -v /vadapav:/vadapav  -v vadapav:/var/lib/mysql -p 3306:3306 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123 mysql
+  338  docker exec -it db5 bash
+  339  cd /vadapav/
+  340  ls
+  341  cd /var/lib/docker/volumes/vadapav/_data/
+  342  ls
+  343  touch v{1..10}.txt
+  344  ls
+  345  history
+  346  cd ~
+  347  docker run -d --name=t1 --tmpfs /app_logs httpd
+  348  docker exec -it t1 bash
+  349  # driver : overlay2
+  350  docker info
+  351  history
