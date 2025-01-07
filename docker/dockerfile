@@ -1,0 +1,58 @@
+=============================
+root@docker:/dockerfiles# cat 1.df
+FROM ubuntu
+MAINTAINER "Trainer@gmail.com"
+LABEL "env"="dev"
+LABEL "customer"="This is for customer google to lauch websites"
+WORKDIR /vadapav/samosa
+WORKDIR dosa
+WORKDIR /misalpav
+
+ENV a=10
+ENV servername=dosa
+ARG b=20
+ARG hostname=samosa
+EXPOSE 80
+VOLUME /v1
+RUN apt update -y
+RUN apt install apache2 -y && apt install tree -y && apt install net-tools -y
+COPY index.html /var/www/html
+COPY . .
+ADD 1.txt /vadapav
+ADD 1.tar /vadapav/samosa
+ADD https://the.earth.li/~sgtatham/putty/latest/wa64/putty-arm64-0.82-installer.msi /vadapav/samosa/dosa
+#USER app1
+ENTRYPOINT ["apache2ctl","-D","FOREGROUND"]
+
+=============================
+  410  mkdir /dockerfiles
+  411  cd /dockerfiles/
+  412  touch 1.df one.dockerfile dockerfile
+  413  ls
+  414  vi 1.df
+  415  cat 1.df
+  416  echo "Learning Dockerfiles" > index.html
+  417  touch 1.txt
+  418  tar -cvf 1.tar *
+  419  ls
+  420  docker images
+  421  docker ps -a
+  422  docker rm -f $(docker ps -a -q)
+  423  docker ps -a
+  424  docker images
+  425  ls
+  426  docker build . -f 1.df -t mywebserver:v1.0
+  427  docker images
+  428  docker run -d --name=web1 -p 9090:80 mywebserver:v1.0
+  429  docker ps -a
+  430  mkdir /hostpital
+  431  cd /hostpital/
+  432  git clone https://github.com/kharatramesh/hospital.git
+  433  ls
+  434  cd hospital/
+  435  ls
+  436  pwd
+  437  docker images
+  438  docker run -d --name=hospital -p 9091:80 -v /hostpital/hospital:/var/www/html mywebserver:v1.0
+  439  docker ps -a
+  440  history
