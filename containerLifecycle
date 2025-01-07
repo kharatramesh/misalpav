@@ -139,3 +139,20 @@ volumes
   349  # driver : overlay2
   350  docker info
   351  history
+===============================================
+Creating custom bridge
+apt install bridge-utils
+brctl show
+
+docker network create --driver=bridge --subnet=21.21.21.0/24 net1
+ docker network ls
+docker inspect net1
+  373  clear
+  374  docker inspect c1 | grep -i ipaddr
+  378  docker run -d --name=n1 --network=net1 --ip=21.21.21.21 --hostname=dosa.samosa.com --cpus="0.01" --memory=15M -v /samosa:/samosa -v dosa:/dosa -p 9090:80 -p 9091:80 httpd
+  379  docker ps -a
+  381  docker inspect n1 | grep -i ipaddr
+  382  curl "21.21.21.21"
+  383  docker stat n1
+  384  docker stats n1
+===============================================
