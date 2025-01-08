@@ -37,7 +37,7 @@ touch index.php
 
 [root@client1 dockerfiles]# cat /php/index.php
 <?php
-$servername = "172.17.0.2";
+$servername = "172.17.0.2 (Update IP address by Service Endpoint while using docker-compose)";
 $username = "root";
 $password = "123";
 $dbname = "priar";
@@ -65,3 +65,51 @@ $conn->close();
 
 
 please make sure that index.php is kept under /php folder , modify IP address and other indormation as per your container 
+================
+Automation
+
+ 133  docker rm -f db1 webserve1
+  137  docker rmi -f $(docker image -q)
+  138  docker rmi -f $(docker images -q)
+  139  docker ps -a
+  140  docker images
+  141  docker system prune
+  142  docker network ls
+  143  docker volume ls
+  144  docker ps -a
+  145  docker volume prune
+  146  docker ps -a
+  147  docker volume ls
+  148  clear
+  149  history
+  150  clear
+
+root@docker:/dockerfiles# cat project1.yaml 1
+version: "3.9"
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend.df
+    container_name: web1
+    ports:
+    - "8787:80"
+    volumes:
+    - "/php:/var/www/html"
+    depends_on:
+    - database
+  database:
+    build:
+      context: .
+      dockerfile: ./db.df
+    container_name: db1
+    volumes:
+    - "/empdb:/var/lib/mysql"
+    environment:
+    - MYSQL_ROOT_PASSWORD=123
+
+===========================
+ 164  curl -SL https://github.com/docker/compose/releases/download/v2.32.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  165  ls -l /usr/local/bin/docker-compose
+  166  chmod a+x /usr/local/bin/docker-compose
+  167  docker-compose -f project1.yaml up -d
