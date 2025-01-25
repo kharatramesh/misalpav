@@ -12,3 +12,5 @@ docker run -d --name=c11 --network=vadapav --ip=91.91.0.21 --memory=15M --cpus="
    31  docker inspect null1 | grep -i ipaddr
    32  docker inspect db1 | grep -i ipaddr
    33  docker exec -it null1 bash
+========
+Updated
