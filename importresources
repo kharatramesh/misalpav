@@ -1,0 +1,59 @@
+resource "azurerm_resource_group" "rg1" {
+  name     = var.rname
+  location = var.region
+  tags = {
+    "name" = "sa1"
+  }
+}
+
+resource "azurerm_storage_account" "sa1" {
+  name                     = "tfstatesamosa"
+  resource_group_name      = azurerm_resource_group.rg1.name
+  location                 = azurerm_resource_group.rg1.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  tags = {
+    environment = "staging",
+    "env"       = "prod"
+  }
+}
+
+resource "azurerm_storage_container" "tfstate" {
+  name                  = "tfstate"
+  storage_account_id    = azurerm_storage_account.sa1.id
+  container_access_type = "private"
+}
+
+resource "azurerm_resource_group" "rg2" {
+  name = "new-${var.rname}"
+  location = var.region
+}
+
+resource "azurerm_resource_group" "rg3" {
+  name = "samosa-sa1"
+  location = var.region
+}
+
+resource "azurerm_resource_group" "rg4" {
+  name = "vadapav-rg4"
+  location = var.region
+  tags = {
+    "Name" = "vadapav"
+  }
+}
+
+# import {
+#   to = azurerm_resource_group.rg4
+#   id = "/subscriptions/32c83f7e-24fd-4f30-b495-0c5b40426f38/resourceGroups/vadapav-rg4"
+# }
+
+
+# import {
+#   to = azurerm_resource_group.rg2
+#   id = "/subscriptions/32c83f7e-24fd-4f30-b495-0c5b40426f38/resourceGroups/new-tfstate"
+# }
+
+# import {
+#   to = azurerm_resource_group.rg3
+#   id = "/subscriptions/32c83f7e-24fd-4f30-b495-0c5b40426f38/resourceGroups/samosa-sa1"
+# }
