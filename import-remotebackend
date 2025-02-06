@@ -1,3 +1,32 @@
+==============
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "4.17.0"
+    }
+  }
+
+  backend "azurerm" {
+      resource_group_name  = "tfstate"
+      storage_account_name = "tfstatesamosa"
+      container_name       = "tfstate"
+      key                  = "Mw9wW44I1hu/9yLTmTyjfZ&&&&&&&&Tg=="
+}
+}
+
+provider "azurerm" {
+  features {}
+  subscription_id = var.sid
+  tenant_id       = var.tid
+  client_id       = var.cid
+  client_secret   = var.cs
+  
+  # Configuration options
+}
+
+===========
 resource "azurerm_resource_group" "rg1" {
   name     = var.rname
   location = var.region
