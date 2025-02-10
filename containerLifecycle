@@ -135,6 +135,7 @@ volumes
   345  history
   346  cd ~
   347  docker run -d --name=t1 --tmpfs /app_logs httpd
+       docker run -d --name=t3 --mount type=tmpfs,dst=/app,tmpfs-size=1000000 httpd
   348  docker exec -it t1 bash
   349  # driver : overlay2
   350  docker info
