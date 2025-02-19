@@ -84,29 +84,34 @@ Automation
   149  history
   150  clear
 
-root@docker:/dockerfiles# cat project1.yaml 1
+root@dosa:/trainer-project# cat project1.yaml
 version: "3.9"
 services:
-  frontend:
+  webserver:
     build:
       context: .
       dockerfile: ./frontend.df
-    container_name: web1
+    container_name: frontend
     ports:
-    - "8787:80"
+    - "9090:80"
     volumes:
-    - "/php:/var/www/html"
+    - "/trainer-project:/var/www/html"
     depends_on:
     - database
+
   database:
     build:
       context: .
       dockerfile: ./db.df
-    container_name: db1
+    container_name: db
     volumes:
-    - "/empdb:/var/lib/mysql"
+    - "hexavadapav:/var/lib/mysql"
     environment:
     - MYSQL_ROOT_PASSWORD=123
+
+volumes:
+  hexavadapav:
+    driver: local
 
 ===========================
  164  curl -SL https://github.com/docker/compose/releases/download/v2.32.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
