@@ -1,0 +1,7 @@
+FROM ubuntu AS vadapav
+RUN dd if=/dev/zero of=1.txt bs=1M count=10
+
+FROM alpine
+WORKDIR /samosa
+COPY --from=vadapav 1.txt /samosa
+CMD ["sleep", "3000"]
