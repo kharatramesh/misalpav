@@ -1,0 +1,5 @@
+  246  docker network create -d macvlan     --subnet=10.1.0.0/24     --gateway=10.1.0.1      -o parent=eth0      demo-macvlan-net
+  247  docker network ls
+  248  docker run --rm -itd --network=demo-macvlan-net --ip=10.1.0.110   alpine:latest   /bin/sh
+  249  docker ps -a
+  250  docker run -itd --name=c21 --network=demo-macvlan-net --ip=10.1.0.111 -p 9898:80 httpd
