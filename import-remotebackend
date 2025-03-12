@@ -12,7 +12,8 @@ terraform {
       resource_group_name  = "tfstate"
       storage_account_name = "tfstatesamosa"
       container_name       = "tfstate"
-      key                  = "Mw9wW44I1hu/9yLTmTyjfZ&&&&&&&&Tg=="
+      key                  = "Mw9wW44I1hu/9yLTmTyjfZ&&&&&&&&Tg==" ## Access key of storage account
+      subscription_id = ""
 }
 }
 
