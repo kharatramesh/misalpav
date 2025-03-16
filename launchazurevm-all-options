@@ -1,0 +1,140 @@
+
+data "azurerm_resource_group" "rg2" {
+  name = "modules"
+}
+
+# data "azurerm_platform_image" "os1" {
+#     publisher = "Canonical"
+#     sku = "22_04-lts"
+#     offer = "0001-com-ubuntu-server-jammy"
+#     location = "eastus"
+# }
+
+
+resource "azurerm_virtual_network" "vnet1" {
+  resource_group_name = data.azurerm_resource_group.rg2.name
+  location            = data.azurerm_resource_group.rg2.location
+  name                = "vnet1"
+  address_space       = ["91.91.91.0/24"]
+}
+
+resource "azurerm_subnet" "s1" {
+  name                 = "s1"
+  resource_group_name  = data.azurerm_resource_group.rg2.name
+  virtual_network_name = azurerm_virtual_network.vnet1.name
+  address_prefixes     = ["91.91.91.0/25"]
+}
+
+resource "azurerm_subnet" "s2" {
+  name                 = "s2"
+  resource_group_name  = data.azurerm_resource_group.rg2.name
+  virtual_network_name = azurerm_virtual_network.vnet1.name
+  address_prefixes     = ["91.91.91.128/25"]
+}
+
+resource "azurerm_network_interface" "nic1" {
+  name                = "nic1"
+  resource_group_name = data.azurerm_resource_group.rg2.name
+  location            = azurerm_virtual_network.vnet1.location
+  ip_configuration {
+    name                          = "ip1"
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = azurerm_subnet.s1.id
+    public_ip_address_id          = azurerm_public_ip.pip1.id
+  }
+}
+
+resource "azurerm_public_ip" "pip1" {
+  name                = "pip1"
+  resource_group_name = data.azurerm_resource_group.rg2.name
+  location            = azurerm_virtual_network.vnet1.location
+  allocation_method   = "Static"
+
+}
+
+
+resource "azurerm_network_security_group" "nsg1" {
+  name                = "nsg1"
+  resource_group_name = data.azurerm_resource_group.rg2.name
+  location            = azurerm_virtual_network.vnet1.location
+  dynamic "security_rule" {
+    for_each = var.nsgrules
+    content {
+      name                       = security_rule.value.rulename
+      priority                   = security_rule.value.priority
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = security_rule.value.protocol
+      source_port_range          = "*"
+      destination_port_range     = security_rule.value.dport
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  }
+}
+
+resource "azurerm_network_interface_security_group_association" "assc1" {
+  network_interface_id      = azurerm_network_interface.nic1.id
+  network_security_group_id = azurerm_network_security_group.nsg1.id
+}
+
+resource "azurerm_linux_virtual_machine" "vm1" {
+  name                            = "vm1"
+  location                        = data.azurerm_resource_group.rg2.location
+  resource_group_name             = data.azurerm_resource_group.rg2.name
+  size                            = "Standard_B1s"
+  admin_username                  = "docker"
+  admin_password                  = "Docker@12345"
+  disable_password_authentication = false
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+  source_image_reference {
+    publisher = "Canonical"
+    sku       = "22_04-lts"
+    offer     = "0001-com-ubuntu-server-jammy"
+    version   = "latest"
+  }
+  network_interface_ids = [azurerm_network_interface.nic1.id]
+}
+
+
+
+
+
+
+# output "os_id" {
+#     value = data.azurerm_platform_image.os1.id
+# }
+
+# output "os_version"{
+#     value = data.azurerm_platform_image.os1.version
+# }
+
+output "location_name" {
+  value = data.azurerm_resource_group.rg2.location
+}
+output "id_of_resource_group" {
+  value = data.azurerm_resource_group.rg2.id
+}
+output "publicipaddress_vm" {
+  value = azurerm_linux_virtual_machine.vm1.public_ip_address
+}
+
+
+
+variable "sid" {
+  type    = string
+  default = "32c83f7e-24fd-4f30-b495-0c5b40426f38"
+}
+
+variable "nsgrules" {
+  type = list(map(any))
+  default = [{ "rulename" = "sshrule", "priority" = "100", "dport" = "22", "protocol" = "Tcp" },
+    { "rulename" = "httprule", "priority" = "101", "dport" = "80", "protocol" = "Tcp" },
+    { "rulename" = "httpsrule", "priority" = "102", "dport" = "443", "protocol" = "Tcp" },
+    { "rulename" = "dbrule", "priority" = "103", "dport" = "3306", "protocol" = "Tcp" },
+
+  ]
+}
