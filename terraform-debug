@@ -1,0 +1,56 @@
+
+
+Strategy			Command
+
+1. Enable Debug Logging		export TF_LOG=DEBUG
+
+export TF_LOG=DEBUG
+terraform apply
+
+export TF_LOG=DEBUG
+export TF_LOG_PATH="terraform-debug.log"
+terraform apply
+
+2. Validate Configuration		terraform validate
+
+
+3. Plan Debugging			terraform plan -out=tfplan.binary
+
+terraform plan -out=tfplan.binary
+terraform show -json tfplan.binary > tfplan.json
+
+
+
+
+4. State Inspection		terraform state list & terraform state show <resource>
+
+
+5. Graph Visualization		terraform graph
+
+terraform graph | dot -Tpng > graph.png
+
+
+
+6. Console Testing	terraform console
+
+terraform console
+> var.instance_type
+> aws_instance.example.public_ip
+
+7. Provider Debugging		TF_LOG=DEBUG terraform apply
+TF_LOG=DEBUG TF_LOG_PATH=terraform.log terraform apply
+
+
+8. Enable Detailed Terraform Debugging
+TF_LOG=TRACE terraform apply 2>&1 | tee terraform-debug.log
+
+
+
+
+9. Dry-Run Debugging		terraform plan -target=<resource>
+	terraform plan -target=azurerm_virtual_machine.example
+
+
+10. Manual State Inspection	`cat terraform.tfstate
+	cat terraform.tfstate | jq '.resources[] | {type, name}'
+	
