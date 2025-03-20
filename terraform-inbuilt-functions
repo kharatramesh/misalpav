@@ -1,0 +1,186 @@
+Terraform has built-in functions that help manipulate values, perform calculations, and transform data within configurations. These functions can be categorized into:
+1.	String Functions
+2.	Numeric Functions
+3.	Collection Functions
+4.	Encoding Functions
+5.	Filesystem Functions
+6.	Date & Time Functions
+7.	Type Conversion Functions
+8.	Hashing Functions
+9.	Networking Functions
+________________________________________
+1️⃣ String Functions
+Used for modifying and manipulating strings.
+🔹 lower() – Convert string to lowercase
+output "lower_example" {
+  value = lower("HELLO WORLD")
+}
+# Output: "hello world"
+🔹 upper() – Convert string to uppercase
+output "upper_example" {
+  value = upper("hello world")
+}
+# Output: "HELLO WORLD"
+🔹 replace() – Replace substring within a string
+output "replace_example" {
+  value = replace("terraform-cloud", "cloud", "enterprise")
+}
+# Output: "terraform-enterprise"
+🔹 split() – Split a string into a list
+output "split_example" {
+  value = split(",", "aws,azure,gcp")
+}
+# Output: ["aws", "azure", "gcp"]
+
+🔹 join() – Join a list into a string
+output "join_example" {
+  value = join("-", ["aws", "azure", "gcp"])
+}
+# Output: "aws-azure-gcp"
+________________________________________
+2️⃣ Numeric Functions
+Used for performing mathematical operations.
+🔹 max() – Get the highest value
+output "max_example" {
+  value = max(10, 20, 5, 30)
+}
+# Output: 30
+🔹 min() – Get the lowest value
+hcl
+CopyEdit
+output "min_example" {
+  value = min(10, 20, 5, 30)
+}
+# Output: 5
+🔹 abs() – Absolute value
+output "abs_example" {
+  value = abs(-50)
+}
+# Output: 50
+🔹 ceil() – Round up a decimal number
+output "ceil_example" {
+  value = ceil(4.3)
+}
+# Output: 5
+🔹 floor() – Round down a decimal number
+output "floor_example" {
+  value = floor(4.9)
+}
+# Output: 4
+________________________________________
+3️⃣ Collection Functions
+Used for working with lists, maps, and sets.
+🔹 length() – Count elements in a list
+output "length_example" {
+  value = length(["aws", "azure", "gcp"])
+}
+# Output: 3
+🔹 contains() – Check if a list contains a value
+output "contains_example" {
+  value = contains(["aws", "azure", "gcp"], "aws")
+}
+# Output: true
+🔹 element() – Get an element by index
+output "element_example" {
+  value = element(["aws", "azure", "gcp"], 1)
+}
+# Output: "azure"
+🔹 keys() – Get keys from a map
+output "keys_example" {
+  value = keys({name = "Terraform", version = "1.5"})
+}
+# Output: ["name", "version"]
+🔹 values() – Get values from a map
+
+output "values_example" {
+  value = values({name = "Terraform", version = "1.5"})
+}
+# Output: ["Terraform", "1.5"]
+________________________________________
+4️⃣ Encoding Functions
+Used to encode/decode data.
+🔹 base64encode() – Encode a string in Base64
+output "base64encode_example" {
+  value = base64encode("Hello Terraform")
+}
+# Output: "SGVsbG8gVGVycmFmb3Jt"
+🔹 base64decode() – Decode a Base64 string
+output "base64decode_example" {
+  value = base64decode("SGVsbG8gVGVycmFmb3Jt")
+}
+# Output: "Hello Terraform"
+________________________________________
+5️⃣ Filesystem Functions
+Used to interact with files.
+🔹 file() – Read the contents of a file
+output "file_example" {
+  value = file("example.txt")
+}
+✅ Reads the content of example.txt.
+🔹 fileexists() – Check if a file exists
+output "fileexists_example" {
+  value = fileexists("example.txt")
+}
+# Output: true or false
+________________________________________
+6️⃣ Date & Time Functions
+Used for working with timestamps.
+🔹 timestamp() – Get the current timestamp
+output "timestamp_example" {
+  value = timestamp()
+}
+# Output: "2025-03-20T12:45:00Z"
+________________________________________
+7️⃣ Type Conversion Functions
+Used to convert data types.
+🔹 tostring() – Convert value to string
+output "tostring_example" {
+  value = tostring(100)
+}
+# Output: "100"
+🔹 tolist() – Convert a value to a list
+output "tolist_example" {
+  value = tolist(["aws", "azure", "gcp"])
+}
+🔹 tomap() – Convert a value to a map
+output "tomap_example" {
+  value = tomap({name = "Terraform", version = "1.5"})
+}
+________________________________________
+8️⃣ Hashing Functions
+Used for generating hashes.
+🔹 md5() – Generate an MD5 hash
+output "md5_example" {
+  value = md5("terraform")
+}
+# Output: "ab9a50e5ffbb4b31e3bcd2af3de30d51"
+🔹 sha256() – Generate a SHA-256 hash
+output "sha256_example" {
+  value = sha256("terraform")
+}
+________________________________________
+9️⃣ Networking Functions
+Used for IP operations.
+🔹 cidrsubnet() – Calculate subnet from CIDR
+output "cidrsubnet_example" {
+  value = cidrsubnet("10.0.0.0/16", 8, 2)
+}
+# Output: "10.0.2.0/24"
+🔹 cidrhost() – Get a host IP from a CIDR block
+output "cidrhost_example" {
+  value = cidrhost("10.0.0.0/24", 5)
+}
+# Output: "10.0.0.5"
+________________________________________
+🚀 Conclusion
+Category	Example Functions
+String	lower(), upper(), replace()
+Numeric	max(), min(), ceil()
+Collection	length(), keys(), values()
+Encoding	base64encode(), base64decode()
+Filesystem	file(), fileexists()
+Date & Time	timestamp()
+Type Conversion	tostring(), tolist(), tomap()
+Hashing	md5(), sha256()
+Networking	cidrsubnet(), cidrhost()
+
