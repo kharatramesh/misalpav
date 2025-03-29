@@ -1,0 +1,22 @@
+# file I/o operations
+
+import os
+import sys
+import shutil
+
+# how to create a file in python
+# f1 = open("sakec.txt","x")
+# f1.close()
+# how to write contents in file
+# f1 = open("sakec.txt","w")
+# f1.write("Hello World-line1\n")
+# f1.write("Hello World-line2\n")
+# f1.close()
+# how to read contents of file
+# f1 = open("sakec.txt","r")
+# c1 = f1.read()
+# print(c1)
+# f1.close()
+with open("sakec.txt","r") as f1:
+    l1 = f1.readlines()
+print(l1[2])
