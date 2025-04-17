@@ -1,0 +1,130 @@
+import "tfplan/v2" as plan
+import "tfstate/v2" as state
+import "strings"
+
+# Start of the policy evaluation
+print("=== Starting EC2 AMI Compliance Evaluation ===")
+
+
+get_valid_ami_ids_from_state = func() {
+
+    valid_ami_ids = []
+
+    # Iterate through all resources in the current state
+    for state.resources as address, resource {
+        # Check if it's an aws_ami data source
+        if resource.type == "aws_ami" and resource.mode == "data" {
+            most_recent = resource.values.most_recent else false
+            ami_id = resource.values.id else null
+
+            print("Found aws_ami data source in state:", address, "most_recent:", most_recent, "ami_id:", ami_id)
+
+            if most_recent and ami_id != null {
+                append(valid_ami_ids, ami_id)
+            }
+        }
+    }
+
+    
+    unique_ami_ids = []
+    for valid_ami_ids as id {
+        if id not in unique_ami_ids {
+            append(unique_ami_ids, id)
+        }
+    }
+    return unique_ami_ids
+}
+
+# Function to check if a resource change has specific exclusion tags
+has_exclusion_tag = func(resource_change, tag_value) {
+    # Safely access the planned 'after' state of the resource
+    after = resource_change.change.after else null
+    if after == null {
+        # If resource is being destroyed or 'after' is missing, treat as not excluded
+        return false
+    }
+
+    # Safely access the tags map
+    resource_tags = after.tags else null
+    if resource_tags == null {
+        return false
+    }
+
+    exclusion_value = resource_tags.exclusion else null
+    if exclusion_value == null {
+        return false
+    }
+
+
+    if tag_value == null {
+      print("Warning: has_exclusion_tag called with null tag_value")
+      return false
+    }
+
+    exclusion_tags_list = strings.split(exclusion_value, " ")
+    return exclusion_tags_list contains tag_value
+}
+
+valid_ami_ids = get_valid_ami_ids_from_state()
+
+print("Valid AMI IDs found in current state data sources:", valid_ami_ids)
+
+
+
+ec2_instance_changes = filter plan.resource_changes as address, rc {
+	rc.type == "aws_instance" and
+	(rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+print("Found", length(ec2_instance_changes), "EC2 instance change(s) in the plan.")
+
+non_compliant_instances = []
+
+# Process each planned EC2 instance change
+for ec2_instance_changes as address, resource_change {
+
+    # Access the planned 'ami' value safely from the 'after' state
+    ami_used = resource_change.change.after.ami else null
+
+    instance_id_print = address # Use address for logging/reporting
+
+    if ami_used == null {
+        print("Instance:", instance_id_print, "has no AMI specified in the plan (or is being destroyed). Skipping.")
+        continue  # Skip if AMI is not specified in the planned state
+    }
+
+    if has_exclusion_tag(resource_change, "public") {
+        print("Instance:", instance_id_print, "is excluded due to tag 'exclusion: public'")
+        continue  # Skip checking this instance
+    }
+
+    print("Instance:", instance_id_print, "plans to use AMI:", ami_used)
+
+    if ami_used not in valid_ami_ids {
+        print("VIOLATION: Instance", instance_id_print, "uses non-approved AMI", ami_used)
+        append(non_compliant_instances, {
+            "instance_address": address, # Store the address for reference
+            "ami_used":         ami_used,
+        })
+    } else {
+        print("Instance:", instance_id_print, "uses an approved AMI:", ami_used)
+    }
+}
+
+violation_message = ""
+if length(non_compliant_instances) > 0 {
+    messages = []
+    for non_compliant_instances as instance {
+        addr = instance.instance_address else "unknown_address"
+        ami = instance.ami_used else "unknown_ami"
+        append(messages, "Instance " + addr + " plans to use non-approved AMI " + ami)
+    }
+    violation_message = strings.join(messages, "\n")
+    print("VIOLATIONS DETECTED:\n" + violation_message)
+} else {
+    print("All planned EC2 instances are compliant with AMI policy.")
+}
+
+main = rule {
+    length(non_compliant_instances) == 0
+}
