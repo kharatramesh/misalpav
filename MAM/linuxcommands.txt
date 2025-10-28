@@ -1,0 +1,29 @@
+Q1. Copy a1.txt file from A2 folder to E2 folder
+
+cp source_path Dest_Path
+
+# cp /mam/A/A2/a1.txt /mam/E/E2
+# ls /mam/E/E2
+
+
+Q2. Copy d2.txt file from D1 folder to C1 folder (Copy paste)
+
+# cp /mam/D/D1/d2.txt /mam/C/C1/dtwo.txt
+
+Q3. Copy C2 folder to A2 folder
+
+# cp -r /mam/C/C2 /man/A/A2
+
+Q4. Delete file c3.txt from C1 folder
+
+# rm /mam/C/C1/c3.txt
+
+Q5. rename b1.txt from B2 folder to banana.txt
+# mv /mam/B/B2/b1.txt /mam/B/B2/banana.txt
+# ls /mam/B/B2/
+
+Q6. move c3.txt from C2 folder to A1 folder and rename as cthree.txt (cutPaste)
+mv /mam/C/C2/c3.txt /mam/A/A1/cthree.txt
+
+Q7. Rename folder D2 to blackdog
+=========================================
