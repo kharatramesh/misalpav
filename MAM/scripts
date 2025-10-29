@@ -85,4 +85,35 @@ then
 else
         echo "entry is wrong"
 fi
+==================================
+root@vadapav:/scripts# cat a2.sh
+#!/bin/bash
+
+
+for((i=0;i<=2;i++))
+do
+echo -n "enter username:"
+read u1
+username[$i]=$u1
+useradd -m ${username[$i]}
+echo user ${username[$i]} is added successfully
+done
+
+echo ${username[0]}
+echo ${username[@]}
+root@vadapav:/scripts# cat 1.sh
+#!/bin/bash
+
+echo -n "Enter username: "
+read u1
+echo "Username is : " $u1
+useradd -m $u1
+echo "user created successfully"
+getent passwd $u1
+root@vadapav:/scripts# cat a1.sh
+#!/bin/bash
+
+n1=(1 2 3 4 5)
+echo ${n1[1]}
+root@vadapav:/scripts#
 
