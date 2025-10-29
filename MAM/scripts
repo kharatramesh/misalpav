@@ -23,4 +23,31 @@ echo "Starting Backup Script"
 scp -pr /etc tarun@localhost:/home/tarun/etc-bkp-`date "+%d-%b-%Y:%H:%M:%s"`
 
 echo "backup completed"
-root@vadapav:/scripts#
+==================
+root@vadapav:/scripts# cat 3.sh
+#!/bin/bash
+set Learn Linux Everyday and keep unemployment away
+
+sleep 2
+echo $* : $# words
+shift 1
+
+sleep 2
+echo $* : $# words
+shift 1
+
+sleep 2
+echo $* : $# words
+shift 1
+sleep 2
+echo $* : $# words
+shift 1
+sleep 2
+echo $* : $# words
+shift 1
+sleep 2
+echo $* : $# words
+shift 1
+sleep 2
+echo $* : $# words
+shift 1
