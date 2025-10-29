@@ -1,0 +1,27 @@
+Day 1: Linux Fundamentals & Shell Scripting
+🔹 Morning Session: Linux Essentials
+•	Linux File System Navigation: ls, cd, pwd, mkdir, rm, touch
+•	VI Editor basics
+•	File Permissions: chmod, chown
+•	Introduction to Linux directory structure, hidden files, paths
+•	Compression basics and file ownership: chgrp, umask, ACLs
+🔹 Afternoon Session: Shell Scripting
+•	Writing and executing basic scripts: #!/bin/bash, chmod +x
+•	Variables, conditionals, loops (if, else, for, while)
+•	Exit codes, I/O redirection, command substitution
+•	Functions, debugging (set -x, set -e)
+•	Arrays and basic error handling
+
+Day 2: Job Control, Networking & System Monitoring
+🔹 Morning Session: Job Management & Monitoring
+•	Job submission and monitoring with PBS: qsub, qstat, qdel
+•	Process monitoring: ps, top, kill, htop
+•	Application benchmarking, foreground/background jobs: &, fg, bg, jobs
+•	Scheduling tasks: cron
+•	Disk and memory tools: df, du, free, vmstat, lsblk
+🔹 Afternoon Session: Networking & Troubleshooting
+•	IP classes, basic routing, switching concepts
+•	Network commands: ping, netstat, ss, ssh, scp, rsync, traceroute
+•	Secure shell usage and key generation: ssh-keygen
+•	Troubleshooting system issues: permissions, disk space, services, connectivity
+•	System logs and logging tools: dmesg, journalctl, /var/log, logrotate
