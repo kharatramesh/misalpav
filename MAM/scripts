@@ -1,0 +1,26 @@
+root@vadapav:/scripts# cat 2.sh
+#!/bin/bash
+
+for i in `cat users`
+do
+        userdel -r $i
+        echo user $i deleted successfully
+done
+root@vadapav:/scripts# cat 1.sh
+#!/bin/bash
+
+echo -n "Enter username: "
+read u1
+echo "Username is : " $u1
+useradd -m $u1
+echo "user created successfully"
+getent passwd $u1
+root@vadapav:/scripts# cat backup.sh
+#!/bin/bash
+
+echo "Starting Backup Script"
+
+scp -pr /etc tarun@localhost:/home/tarun/etc-bkp-`date "+%d-%b-%Y:%H:%M:%s"`
+
+echo "backup completed"
+root@vadapav:/scripts#
