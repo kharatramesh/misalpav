@@ -92,23 +92,50 @@ resource "aws_instance" "example" {
   user_data     =  "${file("install_apache.sh")}"
 }
 
+======================Remote Backend==================
 
-======================================
-provider "aws" {
-   region     = "eu-central-1"
-   access_key = var.access_key
-   secret_key = var.secret_key
-}
+# resource "aws_s3_bucket" "terraform_state" {
+#   bucket = "trainer-terraform-state-bucket-1411"
 
-resource "aws_dynamodb_table" "state_locking" {
-  hash_key = "LockID"
-  name     = "dynamodb-state-locking"
-  attribute {
-    name = "LockID"
-    type = "S"
+# }
+
+# resource "aws_s3_bucket_versioning" "versioning_example" {
+#   bucket = aws_s3_bucket.terraform_state.id
+#   versioning_configuration {
+#     status = "Enabled"
+#   }
+# }
+
+
+
+# resource "aws_dynamodb_table" "state_locking" {
+#   hash_key = "LockID"
+#   name     = "dynamodb-state-locking"
+#   attribute {
+#     name = "LockID"
+#     type = "S"
+#   }
+#   billing_mode = "PAY_PER_REQUEST"
+# }
+
+
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "6.21.0"
+    }
+
   }
-  billing_mode = "PAY_PER_REQUEST"
+  backend "s3" {
+    bucket       = "trainer-terraform-state-bucket-1411"
+    key          = "terraform/remote/s3/terraform.tfstate"
+    region       = "ap-south-1"
+    use_lockfile = true
+  }
 }
+
 
 resource "aws_instance" "ec2_example" {
     ami = "ami-0767046d1677be5a0"
@@ -118,14 +145,8 @@ resource "aws_instance" "ec2_example" {
     }
 }
 
-terraform {
-    backend "s3" {
-        bucket = "-terraform-s3-bucket"
-        key    = "/terraform/remote/s3/terraform.tfstate"
-        region     = "eu-central-1"
-       dynamodb_table  = "dynamodb-state-locking"
-    }
-} 
+
 ===========================
+
 
 
