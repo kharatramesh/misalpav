@@ -1,0 +1,106 @@
+ 1  password
+    2  passwd
+    3  cd /etc/ssh/
+    4  vi sshd_config
+    5  cat sshd_config
+    6  systemctl daemon-reload
+    7  ssh-keygen -t rsa
+    8  vi /etc/hosts
+    9  ip a s
+   10  vi /etc/hosts
+   11  ssh-copy-id root@master
+   12  exit
+   13  ssh-copy-id root@host1
+   14  ssh-copy-id root@host2
+   15  ssh root@master
+   16  ssh root@host1
+   17  ssh root@host2
+   18  cat .ssh/id_rsa.pub
+   19  cat .ssh/id_rsa
+   20  cat .ssh/authorized_keys
+   21  clear
+   22  systemctl status ssh
+   23  clear
+   24  $ sudo apt update
+   25  $ sudo apt install software-properties-common
+   26  $ sudo add-apt-repository --yes --update ppa:ansible/ansible
+   27  $ sudo apt install ansible
+   28  sudo apt update
+   29  sudo apt install software-properties-common
+   30  sudo add-apt-repository --yes --update ppa:ansible/ansible
+   31  sudo apt install ansible
+   32  python3 --version
+   33  ansible --version
+   34  cd /etc/ansible/
+   35  ls
+   36  > hosts
+   37  vi hosts
+   38  ansible web --list-hosts
+   39  ansible db --list-hosts
+   40  ansible openshift --list-hosts
+   41  ansible email --list-hosts
+   42  ansible all --list-hosts
+   43  history
+   44  w
+   45  clear
+   46  w
+   47  cd ~
+   48  history
+   49  cat /etc/ansible/hosts
+   50  w
+   51  # modules
+   52  clear
+   53  ansible web -m ping
+   54  ansible db -m ping
+   55  ansible openshift -m ping
+   56  history
+   57  ansible web -m command -a 'hostname'
+   58  ansible db -m command -a 'hostname'
+   59  ansible web -m user -a 'name=A1 state=present'
+   60  tail -1 /etc/passwd
+   61  ansible web -m user -a 'name=A1 state=absent'
+   62  tail -1 /etc/passwd
+   76  ansible web -m file -a 'name=1.txt state=touch'
+   77  ansible web -m file -a 'name=/home/1.txt state=touch'
+
+   80  ansible-doc -l
+   81  ansible-doc cisco.dnac.user
+   82  ansible-doc -l
+   83  ansible-doc -l | grep file
+   84  ansible-doc -l | grep ansible.builtin.file
+   85  ansible-doc ansible.builtin.file
+   86  history
+   87  useradd A3
+   88  passwd A3
+   89  tail -1 /etc/shadow
+   90  ansible web -m user  -b -a 'name=A4 password=123 state=present'
+   91  tail -2 /etc/shadow
+   92  su - A4
+   93  # yaml files --- playbook
+   94  mkdir /trainer
+   95  cd /trainer
+   96  touch user1.yaml
+   97  vi user1.yaml
+   98  cat user1.yaml
+   99  vi /home/index.html
+  100  ansible-playbook --syntax-check user1.yaml
+  101  ansible-playbook -C user1.yaml
+  102  vi user1.yaml
+  103  ansible-playbook user1.yaml
+  104  vi user1.yaml
+  105  ansible-playbook user1.yaml
+  106  curl master
+  107  cat user1.yaml
+  108  tail -1 /etc/passwd
+  109  vi  user1.yaml
+  110  ls
+  111  vi /home/index.html
+  112  ansible-playbook user1.yaml
+  113  curl host2
+  114  vi  user1.yaml
+  115  ansible-playbook user1.yaml
+  116  history
+  117  cat user1.yaml
+  118  vi user1.yaml
+  119  cat user1.yaml
+  120  history
