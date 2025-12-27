@@ -1,0 +1,33 @@
+root@master:/trainer# cat user1.yaml
+---
+- name: learning playbook
+  hosts: db
+  tasks:
+  - name: adding user
+    user:
+      name: A5
+      shell: /bin/sh
+      state: present
+  - name: create file
+    file:
+      path: /home/vadapav.txt
+      state: present
+  - name: install webserver
+    apt:
+      name: apache2
+      state: present
+      update_cache: yes
+  - name: copy index.html
+    copy:
+      src: /home/index.html
+      dest: /var/www/html
+  - name: start service
+    service:
+      name: apache2
+      state: restarted
+  - name: install database server
+    apt:
+      name: mariadb-server
+      state: present
+
+...
